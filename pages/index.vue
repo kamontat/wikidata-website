@@ -1,20 +1,20 @@
 <template>
   <section class="container">
     <div>
-      
       <div class="form">
         <div class="field is-horizontal">
           <div class="field-label is-normal">
-            <label class="label">Date</label>
+            <label class="label"> Date </label>
           </div>
           <div class="field-body">
             <div class="field">
               <p class="control">
-                <date-picker 
+                <DatePicker
+                  v-model="date"
+                  :first-day-of-week="1"
                   class="date-picker"
-                  v-model="date" 
-                  :first-day-of-week="1" 
-                  lang="en"/>
+                  lang="en"
+                />
               </p>
             </div>
           </div>
@@ -22,16 +22,17 @@
 
         <div class="field is-horizontal">
           <div class="field-label is-normal">
-            <label class="label">Limit</label>
+            <label class="label"> Limit </label>
           </div>
           <div class="field-body">
             <div class="field">
               <div class="control select is-fullwidth">
-                <multiselect 
-                  v-model="limit" 
+                <Multiselect
+                  v-model="limit"
                   :options="limitOptions"
                   :preserve-search="true"
-                  placeholder="Limitation size" />
+                  placeholder="Limitation size"
+                />
               </div>
             </div>
           </div>
@@ -39,16 +40,17 @@
 
         <div class="field is-horizontal">
           <div class="field-label is-normal">
-            <label class="label">Sort by</label>
+            <label class="label"> Sort by </label>
           </div>
           <div class="field-body">
             <div class="field">
               <div class="control select is-fullwidth">
-                <multiselect 
-                  v-model="sort" 
+                <Multiselect
+                  v-model="sort"
                   :options="sortOptions"
                   :preserve-search="true"
-                  placeholder="Sorting by"/>
+                  placeholder="Sorting by"
+                />
               </div>
             </div>
           </div>
@@ -56,39 +58,38 @@
 
         <div class="field is-horizontal">
           <div class="field-label is-normal">
-            <label class="label">Sort order</label>
+            <label class="label"> Sort order </label>
           </div>
           <div class="field-body">
             <div class="field">
               <div class="control select is-fullwidth">
-                <multiselect 
-                  v-model="sortOrder" 
+                <Multiselect
+                  v-model="sortOrder"
                   :options="sortOrderOptions"
                   :preserve-search="true"
-                  placeholder="Sorting order"/>
+                  placeholder="Sorting order"
+                />
               </div>
             </div>
           </div>
         </div>
 
         <div class="field is-horizontal">
-          <div class="field-label">
-          <!-- Left empty for spacing -->
-          </div>
+          <div class="field-label"><!-- Left empty for spacing --></div>
           <div class="field-body">
             <div class="field">
               <div class="control">
                 <button
-                  class="button is-primary search"
                   :class="isLoading ? 'is-loading' : ''"
-                  @click="search">
+                  class="button is-primary search"
+                  @click="search"
+                >
                   Search
                 </button>
               </div>
             </div>
           </div>
         </div>
-        
       </div>
 
       <div class="display">
@@ -96,32 +97,42 @@
 
         <table class="table is-fullwidth">
           <thead>
-            <tr >
-              <th
+            <tr>
+              <th 
                 v-for="col in columns" 
                 :key="col">{{ col }}</th>
             </tr>
           </thead>
           <tfoot>
-            <tr >
-              <th
+            <tr>
+              <th 
                 v-for="col in columns" 
                 :key="col">{{ col }}</th>
             </tr>
           </tfoot>
           <tbody>
-            <tr 
-              v-for="(element, index) in results" 
-              :key="element.id+'-'+index">
-              <th>{{ index+1 }}</th>
+            <tr
+              v-for="(element, index) in results"
+              :key="element.id + '-' + index"
+            >
+              <th>{{ index + 1 }}</th>
               <th>{{ element.id }}</th>
               <td>{{ element.title }}</td>
-              <td><a 
-                :href="element.url" 
-                target="_black"
-                :title="element.title">{{ element.url }}</a>
+              <td>
+                <a 
+                  :href="element.url" 
+                  :title="element.title" 
+                  target="_black">
+                  {{ element.url }}
+                </a>
               </td>
-              <td>{{ (typeof element.date === "string") ? element.date : element.date.format("ddd DD MMMM YYYY") }}</td>
+              <td>
+                {{
+                  typeof element.date === 'string'
+                    ? element.date
+                    : element.date.format('ddd DD MMMM YYYY')
+                }}
+              </td>
             </tr>
           </tbody>
         </table>
