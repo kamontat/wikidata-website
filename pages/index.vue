@@ -1,7 +1,41 @@
 <template>
   <section class="container">
+
+    <article class="message is-link">
+      <div class="message-header">
+        <p>Query (<a :href="queryLink">link</a>)</p>
+        <button 
+          @click="showQuery=!showQuery" 
+          class="delete" 
+          aria-label="delete"/>
+      </div>
+      <div 
+        class="message-body is-paddingless is-marginless" 
+        :class="showQuery ? '' : 'is-hidden' ">
+        <pre style="background-color: transparent;">{{ query }}</pre>
+      </div>
+    </article>
+    
     <div>
       <div class="form">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label"> Language </label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control select is-fullwidth">
+                <Multiselect
+                  v-model="language"
+                  :options="languageOptions"
+                  :preserve-search="true"
+                  placeholder="Language option"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="field is-horizontal">
           <div class="field-label is-normal">
             <label class="label"> Date </label>
@@ -113,104 +147,40 @@
           <tbody>
             <tr
               v-for="(element, index) in results"
-              :key="element.id + '-' + index"
+              :key="element.id.value + '-' + index"
             >
               <th>{{ index + 1 }}</th>
-              <th>{{ element.id }}</th>
-              <td>{{ element.title }}</td>
-              <td>
-                <a 
-                  :href="element.url" 
-                  :title="element.title" 
-                  target="_black">
-                  {{ element.url }}
-                </a>
-              </td>
+              <th><a 
+                :href="getLink(element.id)" 
+                target="_blank">
+                {{ element.id.value }}
+              </a></th>
+              <td style="width: 15%">{{ getTitle(element) }}</td>
+              <td style="width: 15%">{{ element.id.description }}</td>
               <td>
                 {{
-                  typeof element.date === 'string'
-                    ? element.date
-                    : element.date.format('ddd DD MMMM YYYY')
+                  getDate(element.date)
                 }}
               </td>
+              <td>{{ element.composer && element.composer.label || "" }} (<a 
+                :href="getLink(element.composer)"
+                target="_blank">{{ element.composer && element.composer.value }}</a>)</td>
             </tr>
           </tbody>
         </table>
-        <!-- <ol>
-          <li 
-            v-for="element in results" 
-            :key="element.title">
-            {{ element.title }}: <a :href="element.url">{{ element.url }}</a>
-          </li>
-        </ol> -->
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import wdk from 'wikidata-sdk'
+import wdk, { simplify } from 'wikidata-sdk'
 import moment from 'moment'
-
-const query = async (axios, date, _limit, _sort, _order) => {
-  const limit = _limit || 100
-  const sort = _sort || 'date'
-  const order = _order || 'descending'
-
-  const formatedDate = (date && moment(date).format('YYYY-MM-DD')) || ''
-
-  console.log(`date=${date}(${typeof date}), limit=${limit}`)
-
-  const query = `SELECT ?id ?idLabel ?date ?title WHERE {
-  ?id (wdt:P31/wdt:P279*) wd:Q2018526.
-  ?id wdt:P1191 ?date.
-  ?id wdt:P1476 ?title.
-  ${date ? '' : '#'} FILTER("${formatedDate}"^^xsd:dateTime = ?date)
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}
-
-ORDER BY ${order === 'descending' ? 'DESC' : 'ASC'}(?${sort})
-LIMIT ${limit}`
-
-  console.log(query)
-
-  const url = wdk.sparqlQuery(query)
-  const json = await axios.$get(url)
-  const results = json.results.bindings.map(element => {
-    // console.log(element)
-
-    const head = element.title.value
-      ? element.title.value
-      : element.idLabel.value
-    const url = element.id.value
-    const id = url.replace('http://www.wikidata.org/entity/', '')
-    const date = moment(element.date.value)
-
-    return {
-      title: head,
-      url,
-      id,
-      date: !date.isValid()
-        ? element.date.value.substring(1).replace(/-(.)+/g, ' BCE')
-        : date
-    }
-  })
-
-  // FIXME: this should sorting by query better than manually sort
-  if (sort !== 'date')
-    results.sort((a, b) => {
-      if (order === 'descending')
-        return b[sort].toString().localeCompare(a[sort].toString())
-      else return a[sort].toString().localeCompare(b[sort].toString())
-    })
-
-  return {
-    results
-  }
-}
 
 import DatePicker from 'vue2-datepicker'
 import Multiselect from 'vue-multiselect'
+
+import { query as dataQuery } from '../apis/wikidata.js'
 
 export default {
   components: {
@@ -220,14 +190,25 @@ export default {
   data() {
     return {
       date: '',
-      limit: '100',
-      limitOptions: ['10', '20', '50', '100', '200', '400', '800', '1000'],
-      sort: 'date',
+      limitOptions: [
+        '5',
+        '10',
+        '20',
+        '30',
+        '50',
+        '100',
+        '200',
+        '500',
+        '1000',
+        '3000',
+        '5000'
+      ],
       sortOptions: ['date', 'id', 'title'],
-      sortOrder: 'descending',
       sortOrderOptions: ['ascending', 'descending'],
+      languageOptions: ['en', 'fr', 'de'],
       isLoading: false,
-      columns: ['Index', 'ID', 'Title', 'Link', 'Date']
+      showQuery: true,
+      columns: ['Index', 'ID', 'Title', 'Description', 'Date', 'Composer']
     }
   },
   computed: {
@@ -238,26 +219,50 @@ export default {
   methods: {
     async search() {
       this.isLoading = true
-      const res = await query(
-        this.$axios,
-        this.date,
-        this.limit,
-        this.sort,
-        this.sortOrder
-      )
+      const res = await dataQuery(this.$axios, this)
       this.isLoading = false
       this.results = res.results
+      this.query = res.query
+      this.queryLink = res.link
+    },
+    getLink(id) {
+      if (!id || !id.value) return ''
+      return wdk.getSitelinkUrl({ site: 'wikidata', title: id.value })
+    },
+    getDate(_date) {
+      const date = moment(_date)
+      return !date.isValid()
+        ? _date.substring(1).replace(/-(.)+/g, ' BCE')
+        : date.format('ddd DD MMMM YYYY')
+    },
+    getTitle(element) {
+      // label exist
+      if (element.id.label.match(/^Q\d+/g) === null && element.title)
+        return `${element.id.label} (${element.title})`
+      else if (element.title) return element.title
+      else return element.id.label
     }
   },
-  async asyncData({ $axios }) {
-    const results = await query($axios)
-    return results
+  async asyncData({ $axios, query }) {
+    const opts = {
+      limit: query.limit || '10',
+      language: query.language || query.lang || 'en',
+      sort: query.sort || 'date',
+      sortOrder: query.order || 'descending'
+    }
+
+    const results = await dataQuery($axios, opts)
+    opts.results = results.results
+    opts.query = results.query
+    opts.queryLink = results.link
+    return opts
   }
 }
 </script>
 
 <style>
 .container {
+  margin-top: 20px;
   min-height: 100vh;
   display: block;
 }
@@ -278,6 +283,10 @@ export default {
   color: #526488;
   word-spacing: 5px;
   padding-bottom: 15px;
+}
+
+.form {
+  margin-top: 50px;
 }
 
 .links {
