@@ -27,11 +27,6 @@ module.exports = {
   css: [],
 
   /*
-   ** Plugins to load before mounting the App
-   */
-  plugins: [{ src: '~plugins/component', ssr: false }],
-
-  /*
    ** Nuxt.js modules
    */
   modules: [
