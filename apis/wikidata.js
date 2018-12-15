@@ -1,52 +1,53 @@
 import wdk, { simplify } from 'wikidata-sdk'
+import moment from 'moment'
 
 export const query = async (axios, options = {}) => {
   const date = options.date || ''
+  const composer = options.composer || ''
   const limit = options.limit || 10
-  const sort = options.sort || 'date'
+  const sort = options.sort || 'none'
   const order = options.sortOrder || 'descending'
   const language = options.language || 'en'
 
   const formatedDate = (date && moment(date).format('YYYY-MM-DD')) || ''
 
-  console.log(`date=${date}(${typeof date}), limit=${limit}`)
-
-  // SELECT ?id ?idLabel ?idDescription ?title ?date ?composerLabel WHERE {
-  //   ?id (wdt:P31/wdt:P279*) wd:Q1344.
-  //   OPTIONAL {
-  //     ?id wdt:P1191 ?date.
-  //     ?id wdt:P1476 ?title.
-  //     ?id wdt:P86 ?composer.
-  //   }
-  //   # FILTER(""^^xsd:dateTime = ?date)
-  //   SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
-  // }
-
-  // ORDER BY DESC(?date)
-  // LIMIT 200
-
+  console.log(options)
   const query = `SELECT ?id ?idLabel ?idDescription ?title ?date ?composer ?composerLabel WHERE {
   ?id (wdt:P31/wdt:P279*) wd:Q1344.
   OPTIONAL {
        ?id wdt:P1191 ?date.
        ?id wdt:P1476 ?title.
        ?id wdt:P86 ?composer.
+       ?id rdfs:label ?idLabel.
+       ?composer rdfs:label ?composerLabel.
   }
-  ${date ? '' : '#'} FILTER("${formatedDate}"^^xsd:dateTime = ?date)
+
+  FILTER(LANG(?idLabel) = "${language}").
+  FILTER(LANG(?composerLabel) = "${language}").
+  ${date ? '' : '# '}FILTER("${formatedDate}"^^xsd:dateTime = ?date)
+  ${
+    composer ? '' : '# '
+  }FILTER(CONTAINS(LCASE(?composerLabel), "${composer.toLowerCase()}"@${language}))
   SERVICE wikibase:label { bd:serviceParam wikibase:language "${language}". }
 }
 
-ORDER BY ${order === 'descending' ? 'DESC' : 'ASC'}(?${sort})
+${sort === 'none' ? '# ' : ''}ORDER BY ${
+    order === 'descending' ? 'DESC' : 'ASC'
+  }(?${sort})
 LIMIT ${limit}`
 
-  const url = wdk.sparqlQuery(query)
-  const json = await axios.$get(url)
+  console.log(`built query`)
+  console.log(query)
 
+  const url = wdk.sparqlQuery(query)
+  console.log(`built url`)
+  const json = await axios.$get(url)
+  console.log(`received json`)
   const simplified = simplify.sparqlResults(json)
-  console.log(simplified)
+  console.log(`simplified results`)
 
   // FIXME: this should sorting by query better than manually sort
-  if (sort !== 'date')
+  if (sort !== 'date' && sort !== 'none')
     simplified.sort((a, b) => {
       const aa = order === 'descending' ? a : b
       const bb = order === 'descending' ? b : a

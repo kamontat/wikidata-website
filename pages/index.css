@@ -1,0 +1,35 @@
+.container {
+  margin-top: 20px;
+  min-height: 100vh;
+  display: block;
+}
+
+.form {
+  margin-top: 50px;
+}
+
+.links {
+  padding-top: 15px;
+}
+
+.date-picker {
+  display: block;
+  width: 100%;
+}
+
+.search {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.multiselect__select::before {
+  content: none !important;
+}
+
+.select:not(.is-multiple):not(.is-loading)::after {
+  z-index: 0;
+}
+
+.is-halfwidth {
+  width: 49%;
+}

@@ -1,6 +1,5 @@
 <template>
   <section class="container">
-
     <article class="message is-link">
       <div class="message-header">
         <p>Query (<a :href="queryLink">link</a>)</p>
@@ -17,6 +16,10 @@
     </article>
     
     <div>
+      <div style="text-align: right;">
+        <h1 class="title">Query Opera in Wikidata</h1>
+        <h2 class="subtitle">https://www.wikidata.org/wiki/Q1344</h2>
+      </div>
       <div class="form">
         <div class="field is-horizontal">
           <div class="field-label is-normal">
@@ -31,6 +34,23 @@
                   :preserve-search="true"
                   placeholder="Language option"
                 />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label"> Composer name </label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control is-fullwidth">
+                <input 
+                  class="input" 
+                  type="text" 
+                  v-model="composer"
+                  placeholder="Text input">
               </div>
             </div>
           </div>
@@ -74,11 +94,11 @@
 
         <div class="field is-horizontal">
           <div class="field-label is-normal">
-            <label class="label"> Sort by </label>
+            <label class="label"> Sorting </label>
           </div>
           <div class="field-body">
             <div class="field">
-              <div class="control select is-fullwidth">
+              <div class="is-halfwidth control select is-paddingless is-marginless">
                 <Multiselect
                   v-model="sort"
                   :options="sortOptions"
@@ -86,21 +106,12 @@
                   placeholder="Sorting by"
                 />
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label"> Sort order </label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control select is-fullwidth">
+              <div class="is-halfwidth control select is-paddingless is-marginless">
                 <Multiselect
                   v-model="sortOrder"
                   :options="sortOrderOptions"
                   :preserve-search="true"
+                  :disabled="sort === 'none'"
                   placeholder="Sorting order"
                 />
               </div>
@@ -155,8 +166,8 @@
                 target="_blank">
                 {{ element.id.value }}
               </a></th>
-              <td style="width: 15%">{{ getTitle(element) }}</td>
-              <td style="width: 15%">{{ element.id.description }}</td>
+              <td style="width: 20%">{{ getTitle(element) }}</td>
+              <td style="width: 25%">{{ element.id.description }}</td>
               <td>
                 {{
                   getDate(element.date)
@@ -203,7 +214,7 @@ export default {
         '3000',
         '5000'
       ],
-      sortOptions: ['date', 'id', 'title'],
+      sortOptions: ['date', 'id', 'title', 'none'],
       sortOrderOptions: ['ascending', 'descending'],
       languageOptions: ['en', 'fr', 'de'],
       isLoading: false,
@@ -247,8 +258,9 @@ export default {
     const opts = {
       limit: query.limit || '10',
       language: query.language || query.lang || 'en',
-      sort: query.sort || 'date',
-      sortOrder: query.order || 'descending'
+      sort: query.sort || 'none',
+      sortOrder: query.order || 'descending',
+      composer: query.composer || ''
     }
 
     const results = await dataQuery($axios, opts)
@@ -260,56 +272,7 @@ export default {
 }
 </script>
 
-<style>
-.container {
-  margin-top: 20px;
-  min-height: 100vh;
-  display: block;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.form {
-  margin-top: 50px;
-}
-
-.links {
-  padding-top: 15px;
-}
-
-.date-picker {
-  display: block;
-  width: 100%;
-}
-
-.search {
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-
-.multiselect__select::before {
-  content: none !important;
-}
-
-.select:not(.is-multiple):not(.is-loading)::after {
-  z-index: 0;
-}
+<style src="./index.css">
 </style>
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css">
