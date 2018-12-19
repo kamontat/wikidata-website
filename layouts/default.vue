@@ -1,5 +1,5 @@
 <template>
-  <div><nuxt /></div>
+  <div><nuxt :key="$route.fullPath"/></div>
 </template>
 
 <style>

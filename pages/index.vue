@@ -1,279 +1,237 @@
 <template>
-  <section class="container">
-    <article class="message is-link">
-      <div class="message-header">
-        <p>Query (<a :href="queryLink">link</a>)</p>
-        <button 
-          @click="showQuery=!showQuery" 
-          class="delete" 
-          aria-label="delete"/>
+  <div v-if="error">
+    <wd-error 
+      :error="error" 
+      :reason="reason" />
+  </div>
+  <div 
+    class="container is-fluid"
+    v-else >
+    <nav 
+      class="level" 
+      style="margin-top: 1.5rem;">
+      <div class="level-left">
+        <div 
+          class="level-item"
+          v-if="result.properties.logoImage">
+          <figure 
+            v-for="img in result.properties.logoImage" 
+            :key="img"
+            class="image is-32x32"
+            style="margin-right: 4px; margin-left: 4px;">
+            <a 
+              :href="img" 
+              target="_blank">
+              <img 
+              :src="img" >
+            </a>
+          </figure>
+        </div>
+        <div class="level-item has-text-centered">
+          <p class="subtitle is-5">
+            <strong>Wikidata</strong> display <a 
+              target="_blank" 
+              :href="'http://wikidata.org/wiki/'+result.id"><span class="tag is-info">{{ result.labels[language] }}</span></a>
+          </p>
+        </div>
       </div>
-      <div 
-        class="message-body is-paddingless is-marginless" 
-        :class="showQuery ? '' : 'is-hidden' ">
-        <pre style="background-color: transparent;">{{ query }}</pre>
+      <div class="level-right">
+        <div class="level-item">
+          <p style="margin-right: 10px;">Languages: </p>
+          <b-autocomplete
+            v-model="lang"
+            placeholder="en"
+            :open-on-focus="true"
+            :data="filterLanguage"
+            @input="inputMethod"/>
+        </div>
+        <div class="level-item">
+          <input 
+            class="input" 
+            placeholder="query something" 
+            v-model="query"
+            @keyup.enter="queryProcess">
+        </div>
+        <div class="level-item">
+          <nuxt-link to="/table">Table page</nuxt-link>
+        </div>
       </div>
-    </article>
+    </nav>
     
-    <div>
-      <div style="text-align: right;">
-        <h1 class="title">Query Opera in Wikidata</h1>
-        <h2 class="subtitle">https://www.wikidata.org/wiki/Q1344</h2>
-      </div>
-      <div class="form">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label"> Language </label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control select is-fullwidth">
-                <Multiselect
-                  v-model="language"
-                  :options="languageOptions"
-                  :preserve-search="true"
-                  placeholder="Language option"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label"> Composer name </label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control is-fullwidth">
-                <input 
-                  class="input" 
-                  type="text" 
-                  v-model="composer"
-                  placeholder="Text input">
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label"> Date </label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control">
-                <DatePicker
-                  v-model="date"
-                  :first-day-of-week="1"
-                  class="date-picker"
-                  lang="en"
-                />
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label"> Limit </label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control select is-fullwidth">
-                <Multiselect
-                  v-model="limit"
-                  :options="limitOptions"
-                  :preserve-search="true"
-                  placeholder="Limitation size"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label"> Sorting </label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="is-halfwidth control select is-paddingless is-marginless">
-                <Multiselect
-                  v-model="sort"
-                  :options="sortOptions"
-                  :preserve-search="true"
-                  placeholder="Sorting by"
-                />
-              </div>
-              <div class="is-halfwidth control select is-paddingless is-marginless">
-                <Multiselect
-                  v-model="sortOrder"
-                  :options="sortOrderOptions"
-                  :preserve-search="true"
-                  :disabled="sort === 'none'"
-                  placeholder="Sorting order"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="field is-horizontal">
-          <div class="field-label"><!-- Left empty for spacing --></div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <button
-                  :class="isLoading ? 'is-loading' : ''"
-                  class="button is-primary search"
-                  @click="search"
-                >
-                  Search
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="display">
-        <h5>Size: {{ length }}</h5>
-
-        <table class="table is-fullwidth">
-          <thead>
-            <tr>
-              <th 
-                v-for="col in columns" 
-                :key="col">{{ col }}</th>
-            </tr>
-          </thead>
-          <tfoot>
-            <tr>
-              <th 
-                v-for="col in columns" 
-                :key="col">{{ col }}</th>
-            </tr>
-          </tfoot>
-          <tbody>
-            <tr
-              v-for="(element, index) in results"
-              :key="element.id.value + '-' + index"
-            >
-              <th>{{ index + 1 }}</th>
-              <th><a 
-                :href="getLink(element.id)" 
-                target="_blank">
-                {{ element.id.value }}
-              </a></th>
-              <td style="width: 20%">{{ getTitle(element) }}</td>
-              <td style="width: 25%">{{ element.id.description }}</td>
-              <td>
-                {{
-                  getDate(element.date)
-                }}
-              </td>
-              <td>{{ element.composer && element.composer.label || "" }} (<a 
-                :href="getLink(element.composer)"
-                target="_blank">{{ element.composer && element.composer.value }}</a>)</td>
-            </tr>
-          </tbody>
-        </table>
+    <div 
+      class="columns is-multiline" 
+      v-if="result.properties.image">
+      <div 
+        class="column is-full-mobile is-one-third-tablet is-one-third-desktop is-one-quarter-widescreen is-one-quarter-fullhd"
+        style="min-width: 20%;"
+        v-for="img in result.properties.image" 
+        :key="img">
+        <figure class="image">
+          <a 
+            :href="img" 
+            target="_blank">
+            <img 
+            :src="img" >
+          </a>
+        </figure>
       </div>
     </div>
-  </section>
+
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            {{ result.labels[language] }} 
+            <div class="tags is-inline-block">
+              <span 
+                class="tag is-rounded"
+                v-for="alias in result.aliases[language]" 
+                :key="alias">
+                {{ alias }}
+              </span>
+            </div>
+          </h1>
+          <h2 class="subtitle">
+            {{ result.descriptions[language] }}
+          </h2>
+        </div>
+      </div>
+    </section>
+
+    <wd-collection 
+      title="Name"
+      :array="names" 
+      :object="result.properties.name"/>
+
+    <wd-collection 
+      title="Date"
+      :array="dates" 
+      :object="result.properties.date"/>
+
+    <wd-collection 
+      title="Location"
+      :array="locations" 
+      :object="result.properties.location"/>
+
+    <wd-collection 
+      title="Language"
+      :array="languagesProperty" 
+      :object="result.properties.language"/>
+
+    <wd-collection 
+      title="Others"
+      :array="others" 
+      :object="result.properties"/>
+
+    <wd-collection 
+      title="ID"
+      :array="ids" 
+      :object="result.properties.id"/>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>Wikdata UI</strong> by <a href="https://kcnt.info">Kamontat Chantrachirathumrong</a>. 
+          The source code is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. <br>
+          The website content is licensed by <a href="https://www.wikidata.org/wiki/Wikidata:Licensing">Wikidata</a>.
+        </p>
+      </div>
+    </footer>
+  </div>
 </template>
 
 <script>
-import wdk, { simplify } from 'wikidata-sdk'
-import moment from 'moment'
+import { WikidataBuilder } from '../models/wikidataBuilder'
 
-import DatePicker from 'vue2-datepicker'
-import Multiselect from 'vue-multiselect'
-
-import { query as dataQuery } from '../apis/wikidata.js'
+import Collection from '../components/collection.vue'
+import ErrorComponent from '../components/error.vue'
 
 export default {
-  components: {
-    DatePicker,
-    Multiselect
-  },
+  components: { 'wd-collection': Collection, 'wd-error': ErrorComponent },
   data() {
     return {
-      date: '',
-      limitOptions: [
-        '5',
-        '10',
-        '20',
-        '30',
-        '50',
-        '100',
-        '200',
-        '500',
-        '1000',
-        '3000',
-        '5000'
-      ],
-      sortOptions: ['date', 'id', 'title', 'none'],
-      sortOrderOptions: ['ascending', 'descending'],
-      languageOptions: ['en', 'fr', 'de'],
-      isLoading: false,
-      showQuery: true,
-      columns: ['Index', 'ID', 'Title', 'Description', 'Date', 'Composer']
+      lang: '',
+      language: 'en',
+      query: ''
     }
   },
   computed: {
-    length() {
-      return (this.results && this.results.length) || 0
+    languages() {
+      return Object.keys(this.result.labels)
+    },
+    filterLanguage() {
+      return this.languages.filter(lang => lang.includes(this.lang))
+    },
+    names() {
+      if (!this.result.properties.name) return []
+      return Object.keys(this.result.properties.name)
+    },
+    dates() {
+      if (!this.result.properties.date) return []
+      return Object.keys(this.result.properties.date)
+    },
+    locations() {
+      if (!this.result.properties.location) return []
+      return Object.keys(this.result.properties.location)
+    },
+    ids() {
+      if (!this.result.properties.id) return []
+      return Object.keys(this.result.properties.id)
+    },
+    languagesProperty() {
+      if (!this.result.properties.language) return []
+      return Object.keys(this.result.properties.language)
+    },
+    others() {
+      const results = Object.keys(this.result.properties).filter(
+        v =>
+          v !== 'location' &&
+          v !== 'date' &&
+          v !== 'id' &&
+          v !== 'name' &&
+          v !== 'language'
+      )
+      return results
     }
   },
   methods: {
-    async search() {
-      this.isLoading = true
-      const res = await dataQuery(this.$axios, this)
-      this.isLoading = false
-      this.results = res.results
-      this.query = res.query
-      this.queryLink = res.link
+    inputMethod(value) {
+      if (this.languages.findIndex(v => v === value) >= 0) {
+        this.language = value
+      } else {
+        this.language = 'en'
+      }
     },
-    getLink(id) {
-      if (!id || !id.value) return ''
-      return wdk.getSitelinkUrl({ site: 'wikidata', title: id.value })
-    },
-    getDate(_date) {
-      const date = moment(_date)
-      return !date.isValid()
-        ? _date.substring(1).replace(/-(.)+/g, ' BCE')
-        : date.format('ddd DD MMMM YYYY')
-    },
-    getTitle(element) {
-      // label exist
-      if (element.id.label.match(/^Q\d+/g) === null && element.title)
-        return `${element.id.label} (${element.title})`
-      else if (element.title) return element.title
-      else return element.id.label
+    queryProcess() {
+      console.log(this.query)
+
+      this.$router.push({
+        path: this.$router.path,
+        query: {
+          query: this.query
+        }
+      })
+
+      this.$router.go({
+        path: this.$router.path,
+        query: {
+          t: +new Date()
+        }
+      })
     }
   },
   async asyncData({ $axios, query }) {
-    const opts = {
-      limit: query.limit || '10',
-      language: query.language || query.lang || 'en',
-      sort: query.sort || 'none',
-      sortOrder: query.order || 'descending',
-      composer: query.composer || ''
-    }
+    const name = query.query
+    const id = name
+      ? await WikidataBuilder.SearchEntity($axios, name)
+      : undefined
 
-    const results = await dataQuery($axios, opts)
-    opts.results = results.results
-    opts.query = results.query
-    opts.queryLink = results.link
-    return opts
+    if (!id && !query.id)
+      return { error: `404 Not Found`, reason: `query='${name}', id='${id}'` }
+
+    const result = await WikidataBuilder.ListAllProperty($axios, id || query.id)
+    console.log(result)
+    return { result }
   }
 }
 </script>
-
-<style src="./index.css">
-</style>
-
-<style src="vue-multiselect/dist/vue-multiselect.min.css">
-</style>

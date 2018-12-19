@@ -1,5 +1,65 @@
 import wdk, { simplify } from 'wikidata-sdk'
 import moment from 'moment'
+import camalCase from 'lodash.camelcase'
+
+export class transform {
+  static propertyList(data, _group, opts = { convert: true }) {
+    const group = Object.assign(
+      {
+        id: /[ -]id[ ]?/gi,
+        name: /(name|producer|member|designer|creator|developer)/gi,
+        date: /date/gi,
+        location: /(location|coordinates|coordinate|geo|point|locator|country)/gi,
+        music: /(album|sound|music)/gi,
+        language: /(language)/gi
+      },
+      _group
+    )
+
+    const json = { id: { wikidataId: data[0].id } }
+    return data.reduce((p, c) => {
+      // console.log(c.propertyLabel)
+      const matches = Object.keys(group).filter(_key =>
+        group[_key].test(c.propertyLabel)
+      )
+      const _key = matches && matches.length > 0 ? matches[0] : undefined
+
+      let key = opts.convert ? camalCase(c.propertyLabel) : c.propertyLabel
+      let subkey = ''
+
+      if (_key && c.propertyLabel.toLowerCase().match(group[_key])) {
+        subkey = key
+        key = _key
+      }
+
+      if (subkey) {
+        if (!p[key]) {
+          // no key before
+          const _json = {}
+          _json[subkey] = [c.entityLabel]
+          p[key] = _json
+        } else if (!p[key][subkey]) {
+          const _json = p[key]
+          _json[subkey] = [c.entityLabel]
+          p[key] = _json
+        } else if (Array.isArray(p[key][subkey])) {
+          p[key][subkey].push(c.entityLabel)
+        }
+      } else {
+        // is array, append it
+        if (Array.isArray(p[key])) {
+          p[key].push(c.entityLabel)
+          // is exist, convert to array
+        } else {
+          p[key] = [c.entityLabel]
+        }
+      }
+      // })
+
+      return p
+    }, json)
+  }
+}
 
 export const query = async (axios, options = {}) => {
   const date = options.date || ''
@@ -11,7 +71,6 @@ export const query = async (axios, options = {}) => {
 
   const formatedDate = (date && moment(date).format('YYYY-MM-DD')) || ''
 
-  console.log(options)
   const query = `SELECT ?id ?idLabel ?idDescription ?title ?date ?composer ?composerLabel WHERE {
   ?id (wdt:P31/wdt:P279*) wd:Q1344.
   OPTIONAL {
