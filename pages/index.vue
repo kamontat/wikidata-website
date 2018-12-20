@@ -18,7 +18,8 @@
           :href="img" 
           target="_blank">
           <img 
-            class="image is-48x48"
+            class="image"
+            height="32"
             :src="img" >
         </a>
       </div>

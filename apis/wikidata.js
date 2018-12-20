@@ -8,7 +8,7 @@ export class transform {
       {
         id: /[ -]id[ ]?/gi,
         name: /(name|title|label)/gi,
-        images: /[^^]image*/gi,
+        images: /^(?!logo).*[^^]image.*/gi,
         member: /(producer|member|designer|creator|developer|director|composer|editor|writer)/gi,
         date: /date/gi,
         location: /(location|coordinates|coordinate|geo|point|locator|country)/gi,
