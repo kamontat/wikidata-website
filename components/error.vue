@@ -10,9 +10,8 @@
         <div style="margin: 10px;">
           <input 
             class="input" 
-            placeholder="query something" 
+            placeholder="please enter your query message" 
             v-model="query">
-
           <div 
             class="buttons is-centered" 
             style="margin-top: 8px">

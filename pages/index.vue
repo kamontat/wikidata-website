@@ -378,7 +378,10 @@ export default {
       : undefined
 
     if (!id && !query.id)
-      return { error: `404 Not Found`, reason: `query='${name}', id='${id}'` }
+      return {
+        error: `404 Query is NOT exist`,
+        reason: `query='${name}', id='${id}'`
+      }
 
     const result = await WikidataBuilder.ListAllProperty($axios, id || query.id)
     console.log(result)
