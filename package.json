@@ -1,7 +1,7 @@
 {
   "name": "wikidata-website",
-  "version": "1.0.0",
-  "description": "Some website",
+  "version": "2.0.0",
+  "description": "Wikdata display website",
   "author": "Kamontat Chantrachirathumrong",
   "private": true,
   "scripts": {
