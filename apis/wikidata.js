@@ -7,7 +7,9 @@ export class transform {
     const group = Object.assign(
       {
         id: /[ -]id[ ]?/gi,
-        name: /(name|producer|member|designer|creator|developer)/gi,
+        name: /(name|title|label)/gi,
+        images: /[^^]image*/gi,
+        member: /(producer|member|designer|creator|developer|director|composer|editor|writer)/gi,
         date: /date/gi,
         location: /(location|coordinates|coordinate|geo|point|locator|country)/gi,
         music: /(album|sound|music)/gi,
