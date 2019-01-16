@@ -1798,10 +1798,10 @@ browserslist@^4.0.0, browserslist@^4.0.1, browserslist@^4.3.4, browserslist@^4.3
     electron-to-chromium "^1.3.86"
     node-releases "^1.0.5"
 
-buefy@0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/buefy/-/buefy-0.7.1.tgz#84ad090c4300b1e808db5e35d3e48fad76027d8c"
-  integrity sha512-Pq7T5ASuSjpBMFPQfnkDLCKtQxz8ciftTwYkzix7DMWvZHjtcZh1dF34ve8StjXqknEKYxFruCyioE3LdPmqqQ==
+buefy@0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/buefy/-/buefy-0.7.2.tgz#966b540b75d10dd0aba4d4921f0670430d6e5518"
+  integrity sha512-5nj7mJeJE81Ai86Zx1YwADugTJcH3w+iY6WDKiMqDohxXWDSE1Mxzfvn5SJqYb4ofc45lU8yTSTYpOMaZCpR/A==
   dependencies:
     bulma "0.7.2"
 
@@ -3064,10 +3064,10 @@ escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-eslint-config-prettier@3.4.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-3.4.0.tgz#97dd5bf33d4d85862fdadf2ea89b4d6cebf3ba4f"
-  integrity sha512-VDBMmnwA1SH4tGoyTVStbjI18xAFtozvrodjEuoqtP/P/XLJs5Ga8sFf7GSSPxAkgh65CGYT/zOXzsf2IA0aqw==
+eslint-config-prettier@3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-3.5.0.tgz#fb29575c5be7ed79c1637c5a0c58985833290805"
+  integrity sha512-LcZEoAY5lL3/H2NTFSeUl/z8X8oMea1IxLEIb5uDbRxPTdQeeT7oGpRWT6UwHXGcoRbYH0TZmfRsh8iXbpyW7A==
   dependencies:
     get-stdin "^6.0.0"
 
@@ -5336,12 +5336,12 @@ number-is-nan@^1.0.0:
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
   integrity sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
 
-nuxt-buefy@0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/nuxt-buefy/-/nuxt-buefy-0.3.2.tgz#f33306c9b273def47423f318ff3f26544477fb72"
-  integrity sha512-B9Cix+b/W0xaJE55xb9R9chpfd+unQjzIlxcTQCy2X+0YmN++qpBrDus3XoK3GZM54I04SQzaAoeNN3A9kYSLQ==
+nuxt-buefy@0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/nuxt-buefy/-/nuxt-buefy-0.3.3.tgz#0e55d79742f0dff8060bc236f837bcbf504ed5d6"
+  integrity sha512-9Kn2KqC1GavF5YxrCb79nUIYVwhVS+1FVreGVES9DEJX7cG1bZ1FFVmKxVxfByQrhlsf0SbxHPE22PyPjU3YJQ==
   dependencies:
-    buefy "0.7.1"
+    buefy "0.7.2"
 
 nuxt@2.3.4:
   version "2.3.4"
