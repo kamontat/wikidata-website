@@ -8230,10 +8230,10 @@ wikidata-edit@^2.4.0:
     wikidata-sdk "^5.15.3"
     wikidata-token "^2.3.5"
 
-wikidata-sdk@5.15.10:
-  version "5.15.10"
-  resolved "https://registry.yarnpkg.com/wikidata-sdk/-/wikidata-sdk-5.15.10.tgz#71f16a86a477134430cb03c265391e16d3f7e5bc"
-  integrity sha512-19G24S2C/PL5UQRlWVRauaLAtgbHCZZwJSIDyrqa8Xd92d3KjxH5GCbDqLv2csfqH8nFeQ91tJk5GO9RvDto0A==
+wikidata-sdk@6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/wikidata-sdk/-/wikidata-sdk-6.4.0.tgz#dcd0da5d1321eedaa5fc5742f88cd830d742cf9e"
+  integrity sha512-TrhgYDjZTaYGSoco0M6VB6JrwwsZnjm7kZ9DzbgaBNzTNTJcWpNQunWvY+ZVpNrbbCwDcHL7T1hqfwgwv8zmLg==
 
 wikidata-sdk@^5.15.3, wikidata-sdk@^5.15.4:
   version "5.15.9"
