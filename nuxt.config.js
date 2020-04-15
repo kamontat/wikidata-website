@@ -81,11 +81,11 @@ module.exports = {
     layer: 'dataLayer',
     variables: {},
 
-    pageTracking: false,
+    pageTracking: true,
     pageViewEventName: 'nuxtRoute',
 
     autoInit: true,
-    respectDoNotTrack: true,
+    respectDoNotTrack: false,
 
     scriptId: 'gtm-script',
     scriptDefer: false,
