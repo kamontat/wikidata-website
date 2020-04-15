@@ -8,21 +8,47 @@ module.exports = {
    */
   head: {
     title: pkg.name,
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'name', name: 'name', content: pkg.name },
-      { hid: 'description', name: 'description', content: pkg.description },
-      { hid: 'author', name: 'author', content: pkg.author },
-      { hid: 'version', name: 'version', content: pkg.version }
+    meta: [{
+        charset: 'utf-8'
+      },
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1'
+      },
+      {
+        hid: 'name',
+        name: 'name',
+        content: pkg.name
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: pkg.description
+      },
+      {
+        hid: 'author',
+        name: 'author',
+        content: pkg.author
+      },
+      {
+        hid: 'version',
+        name: 'version',
+        content: pkg.version
+      }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{
+      rel: 'icon',
+      type: 'image/x-icon',
+      href: '/favicon.ico'
+    }]
   },
 
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#000' },
+  loading: {
+    color: '#000'
+  },
 
   /*
    ** Global CSS
@@ -35,6 +61,8 @@ module.exports = {
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
+    // Doc: https://github.com/nuxt-community/gtm-module#setup
+    '@nuxtjs/gtm',
     // Doc:https://github.com/nuxt-community/modules/tree/master/packages/bulma
     // '@nuxtjs/bulma',
     'nuxt-buefy'
@@ -44,6 +72,28 @@ module.exports = {
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+  },
+
+  gtm: {
+    dev: true,
+
+    id: 'GTM-5L2JGLN',
+    layer: 'dataLayer',
+    variables: {},
+
+    pageTracking: false,
+    pageViewEventName: 'nuxtRoute',
+
+    autoInit: true,
+    respectDoNotTrack: true,
+
+    scriptId: 'gtm-script',
+    scriptDefer: false,
+    scriptURL: 'https://www.googletagmanager.com/gtm.js',
+
+    noscript: true,
+    noscriptId: 'gtm-noscript',
+    noscriptURL: 'https://www.googletagmanager.com/ns.html'
   },
 
   /*

@@ -13,29 +13,30 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "@nuxtjs/axios": "5.3.6",
-    "@nuxtjs/bulma": "1.2.2",
-    "cross-env": "5.2.0",
-    "express": "4.16.4",
+    "@nuxtjs/axios": "5.9.7",
+    "@nuxtjs/bulma": "1.2.7",
+    "@nuxtjs/gtm": "2.2.3",
+    "cross-env": "7.0.2",
+    "express": "4.17.1",
     "lodash.camelcase": "4.3.0",
     "lodash.lowercase": "4.3.0",
     "moment": "2.24.0",
-    "nuxt": "2.3.4",
-    "nuxt-buefy": "0.3.3",
-    "vue-multiselect": "2.1.3",
-    "vue-tables-2": "1.4.70",
-    "vue2-datepicker": "2.8.1",
-    "wikidata-sdk": "5.15.10"
+    "nuxt": "2.12.2",
+    "nuxt-buefy": "0.3.26",
+    "vue-multiselect": "2.1.6",
+    "vue-tables-2": "2.0.14",
+    "vue2-datepicker": "3.4.1",
+    "wikidata-sdk": "7.3.1"
   },
   "devDependencies": {
-    "babel-eslint": "8.2.6",
-    "eslint": "5.12.1",
-    "eslint-config-prettier": "3.6.0",
-    "eslint-loader": "2.1.1",
-    "eslint-plugin-prettier": "2.7.0",
-    "eslint-plugin-vue": "4.7.1",
-    "nodemon": "1.18.9",
-    "prettier": "1.16.1",
-    "wikidata-cli": "7.1.0"
+    "babel-eslint": "10.1.0",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "6.10.1",
+    "eslint-loader": "4.0.0",
+    "eslint-plugin-prettier": "3.1.3",
+    "eslint-plugin-vue": "6.2.2",
+    "nodemon": "2.0.3",
+    "prettier": "2.0.4",
+    "wikidata-cli": "8.0.0"
   }
 }
