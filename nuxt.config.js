@@ -77,7 +77,7 @@ module.exports = {
   gtm: {
     dev: true,
 
-    id: 'GTM-5L2JGLN',
+    id: 'GTM-TNXHV84',
     layer: 'dataLayer',
     variables: {},
 
