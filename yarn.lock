@@ -8951,10 +8951,10 @@ vue-style-loader@^4.1.0:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
-vue-tables-2@2.0.14:
-  version "2.0.14"
-  resolved "https://registry.yarnpkg.com/vue-tables-2/-/vue-tables-2-2.0.14.tgz#bab8b3847e88482d52121d40da580cc1b3c67f8c"
-  integrity sha512-/+Ct+CU79F6UKzEUwYjRGTRobccdVYEb+ToxuaANiZdNkZTNZn5OoZ1mCCuvOhIEN2nn1z4+fiUUUuZTdvzOfw==
+vue-tables-2@2.0.23:
+  version "2.0.23"
+  resolved "https://registry.yarnpkg.com/vue-tables-2/-/vue-tables-2-2.0.23.tgz#b0546eac962d4f00babf096a98e58bf5961ff14f"
+  integrity sha512-ehh4gMvnQUo08MIac812P8SenNyS1se/o2NwY2Ihlr+8Mv4CLBwHgaFiiNOV0vsKLELfUZ0xQsaFFsmN0enqfQ==
   dependencies:
     array-intersect "^0.0.1"
     babel-helper-vue-jsx-merge-props "^2.0.3"
@@ -8985,12 +8985,7 @@ vue2-datepicker@3.4.1:
     date-fns "^2.0.1"
     date-format-parse "^0.2.5"
 
-vue@>=2.0.0:
-  version "2.5.21"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.21.tgz#3d33dcd03bb813912ce894a8303ab553699c4a85"
-  integrity sha512-Aejvyyfhn0zjVeLvXd70h4hrE4zZDx1wfZqia6ekkobLmUZ+vNFQer53B4fu0EjWBSiqApxPejzkO1Znt3joxQ==
-
-vue@^2.6.10, vue@^2.6.11:
+vue@>=2.0.0, vue@^2.6.10, vue@^2.6.11:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
