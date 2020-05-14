@@ -3020,17 +3020,10 @@ debug@^3.2.6:
   dependencies:
     ms "^2.1.1"
 
-debug@^4.0.1, debug@^4.1.1:
+debug@^4.0.1, debug@^4.1.0, debug@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
   integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
-  dependencies:
-    ms "^2.1.1"
-
-debug@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.0.tgz#373687bffa678b38b1cd91f861b63850035ddc87"
-  integrity sha512-heNPJUJIqC+xB6ayLAMHaIrmN9HKa7aQO8MGqKpvCA+uJYVcvR6l5kgdrhRuwPFHU7P5/A1w0BjByPHwpfTDKg==
   dependencies:
     ms "^2.1.1"
 
@@ -5869,10 +5862,10 @@ node-res@^5.0.1:
     on-finished "^2.3.0"
     vary "^1.1.2"
 
-nodemon@2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-2.0.3.tgz#e9c64df8740ceaef1cb00e1f3da57c0a93ef3714"
-  integrity sha512-lLQLPS90Lqwc99IHe0U94rDgvjo+G9I4uEIxRG3evSLROcqQ9hwc0AxlSHKS4T1JW/IMj/7N5mthiN58NL/5kw==
+nodemon@2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-2.0.4.tgz#55b09319eb488d6394aa9818148c0c2d1c04c416"
+  integrity sha512-Ltced+hIfTmaS28Zjv1BM552oQ3dbwPqI4+zI0SLgq+wpJhSyqgYude/aZa/3i31VCQWMfXJVxvu86abcam3uQ==
   dependencies:
     chokidar "^3.2.2"
     debug "^3.2.6"
@@ -7717,12 +7710,7 @@ semver@7.0.0:
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.0.0.tgz#5f3ca35761e47e05b206c6daff2cf814f0316b8e"
   integrity sha512-+GB6zVA9LWh6zovYQLALHwv5rb2PHGlJi3lfiqIHxR0uuwCgefcOJc59v9fv1w8GbStwxuuqqAjI9NMAOOgq1A==
 
-semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.5.1:
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-5.6.0.tgz#7e74256fbaa49c75aa7c7a205cc22799cac80004"
-  integrity sha512-RS9R6R35NYgQn++fkDWaOmqGoj4Ek9gGs+DPxNUZKuwE183xjJroKvyo1IzVFeXvUrvmALy6FWD5xrdJT25gMg==
-
-semver@^5.6.0, semver@^5.7.1:
+semver@^5.3.0, semver@^5.4.1, semver@^5.5.0, semver@^5.5.1, semver@^5.6.0, semver@^5.7.1:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
   integrity sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==
