@@ -9168,10 +9168,10 @@ wikibase-edit@^3.2.7:
     wikibase-sdk "^7.1.2"
     wikibase-token "^3.0.4"
 
-wikibase-sdk@^7.1.2, wikibase-sdk@^7.1.4, wikibase-sdk@^7.3.1:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/wikibase-sdk/-/wikibase-sdk-7.3.1.tgz#9060f0dcf0a395fc69a888ba3d502a9c3e152e67"
-  integrity sha512-NUMZ8EjOMMwtGRdXyer7u5SECUS0Kaf9eChxWBcwKKf/orGQ1MuqOB4dY3av1v5vZRw5fafM7YPegmPybiFnig==
+wikibase-sdk@^7.1.2, wikibase-sdk@^7.1.4, wikibase-sdk@^7.6.1:
+  version "7.6.1"
+  resolved "https://registry.yarnpkg.com/wikibase-sdk/-/wikibase-sdk-7.6.1.tgz#8d78d510678764ff0daf472b1b38a3f5ef79b2cf"
+  integrity sha512-FCxreLiyO8csswXMZkivUwypWlEB7kLT/kzpHiB8XYY4Iqy0TO+Rjh12uJL6OeaC+eFB0OKQ9TVpTHj+mnYM8w==
 
 wikibase-token@^3.0.4:
   version "3.0.5"
@@ -9208,12 +9208,12 @@ wikidata-lang@^2.0.8:
   resolved "https://registry.yarnpkg.com/wikidata-lang/-/wikidata-lang-2.0.11.tgz#465cbec92c8a6e6e14536a625d3184a0ec5a25df"
   integrity sha512-1Vkkj61BkcXmbk3Mn99EFuVAVZMlN2W2uIujf86NZBUdLqlNKaQnkEgC6QlS9nR3sXfhM5pPaJcZ5R44p91BGw==
 
-wikidata-sdk@7.3.1:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/wikidata-sdk/-/wikidata-sdk-7.3.1.tgz#5d74a258ffa7eb419c71a1f377ec52f3ae6a7900"
-  integrity sha512-MzLlM7owmUZrPEU6vzeZU7cfrfDYiDbI9NhI8yL8fNNH76KBcCCxr0YmCWFk+c07RN7AgU4jz+HDEUSuY9vnRw==
+wikidata-sdk@7.6.1:
+  version "7.6.1"
+  resolved "https://registry.yarnpkg.com/wikidata-sdk/-/wikidata-sdk-7.6.1.tgz#74c18b204590fa2638c222fbaa9bc9b8b60a9cc7"
+  integrity sha512-u6mQazslwwpGA+2DNJHWYKh89KMkv5x/IzOF5pbGBms5QHM3fvTbmSlsJSv+6jdZ0ti7IX5b06Fy94g7wYXHyw==
   dependencies:
-    wikibase-sdk "^7.3.1"
+    wikibase-sdk "^7.6.1"
 
 word-wrap@~1.2.3:
   version "1.2.3"
