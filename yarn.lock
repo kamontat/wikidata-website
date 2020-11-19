@@ -1746,6 +1746,11 @@ babel-loader@^8.1.0:
     pify "^4.0.1"
     schema-utils "^2.6.5"
 
+babel-plugin-add-module-exports@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-add-module-exports/-/babel-plugin-add-module-exports-0.2.1.tgz#9ae9a1f4a8dc67f0cdec4f4aeda1e43a5ff65e25"
+  integrity sha1-mumh9KjcZ/DN7E9K7aHkOl/2XiU=
+
 babel-plugin-dynamic-import-node@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-dynamic-import-node/-/babel-plugin-dynamic-import-node-2.3.0.tgz#f00f507bdaa3c3e3ff6e7e5e98d90a7acab96f7f"
@@ -8915,11 +8920,12 @@ vue-no-ssr@^1.1.1:
   resolved "https://registry.yarnpkg.com/vue-no-ssr/-/vue-no-ssr-1.1.1.tgz#875f3be6fb0ae41568a837f3ac1a80eaa137b998"
   integrity sha512-ZMjqRpWabMPqPc7gIrG0Nw6vRf1+itwf0Itft7LbMXs2g3Zs/NFmevjZGN1x7K3Q95GmIjWbQZTVerxiBxI+0g==
 
-vue-pagination-2@^2.0:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/vue-pagination-2/-/vue-pagination-2-2.0.3.tgz#5010d7c47761bff126a7172b49bf66fd3dad9ada"
-  integrity sha512-4WVs8CsWg3UNqF/97vdnFBL1wEpV+AOBW+MNsMFDraD4gmdR9MpsaaiZp1e9paOsDLRs3a8i0gsTvkNBSQc6mw==
+vue-pagination-2@^3.0:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/vue-pagination-2/-/vue-pagination-2-3.0.8.tgz#3ae6c7283817a6369517460cf28d798ba752fba4"
+  integrity sha512-vYP0QHuVn163tlylZTUeUjZ8k589+vSYrvDkmC/8c1HMbFY+mSuVryJ8KYuzculVkf2sXwls/rX70DL/sWn+Ng==
   dependencies:
+    babel-plugin-add-module-exports "^0.2.1"
     merge "^1.2.0"
     vue ">=2.0.0"
     vuex "^2.0.0"
@@ -8951,10 +8957,10 @@ vue-style-loader@^4.1.0:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
-vue-tables-2@2.0.14:
-  version "2.0.14"
-  resolved "https://registry.yarnpkg.com/vue-tables-2/-/vue-tables-2-2.0.14.tgz#bab8b3847e88482d52121d40da580cc1b3c67f8c"
-  integrity sha512-/+Ct+CU79F6UKzEUwYjRGTRobccdVYEb+ToxuaANiZdNkZTNZn5OoZ1mCCuvOhIEN2nn1z4+fiUUUuZTdvzOfw==
+vue-tables-2@2.1.50:
+  version "2.1.50"
+  resolved "https://registry.yarnpkg.com/vue-tables-2/-/vue-tables-2-2.1.50.tgz#b5a8cf4f55931cfc7368055c3d042a7b4ff02745"
+  integrity sha512-cA+76aLJZDbeaMvuaqIbfYfASNXpk6u05dCuDSWK46c3c5iIXFCk3MPYh3NnsNx9eo8nOdKTRWhAHBOLT30pVA==
   dependencies:
     array-intersect "^0.0.1"
     babel-helper-vue-jsx-merge-props "^2.0.3"
@@ -8962,7 +8968,7 @@ vue-tables-2@2.0.14:
     debounce "^1.1"
     merge "^1.2.0"
     vue "^2.6.10"
-    vue-pagination-2 "^2.0"
+    vue-pagination-2 "^3.0"
 
 vue-template-compiler@^2.6.11:
   version "2.6.11"
@@ -8985,12 +8991,7 @@ vue2-datepicker@3.4.1:
     date-fns "^2.0.1"
     date-format-parse "^0.2.5"
 
-vue@>=2.0.0:
-  version "2.5.21"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.21.tgz#3d33dcd03bb813912ce894a8303ab553699c4a85"
-  integrity sha512-Aejvyyfhn0zjVeLvXd70h4hrE4zZDx1wfZqia6ekkobLmUZ+vNFQer53B4fu0EjWBSiqApxPejzkO1Znt3joxQ==
-
-vue@^2.6.10, vue@^2.6.11:
+vue@>=2.0.0, vue@^2.6.10, vue@^2.6.11:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
