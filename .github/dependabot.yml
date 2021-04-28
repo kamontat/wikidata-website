@@ -1,0 +1,37 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: friday
+    time: "02:00"
+    timezone: Asia/Bangkok
+  open-pull-requests-limit: 10
+  reviewers:
+  - kamontat
+  ignore:
+  - dependency-name: nuxt-buefy
+    versions:
+    - 0.4.4
+    - 0.4.5
+    - 0.4.6
+  - dependency-name: wikidata-sdk
+    versions:
+    - 7.8.0
+    - 7.9.0
+    - 7.9.1
+  - dependency-name: vue-tables-2
+    versions:
+    - 2.1.80
+    - 2.2.0
+  - dependency-name: "@nuxtjs/axios"
+    versions:
+    - 5.12.5
+    - 5.13.0
+  - dependency-name: vue2-datepicker
+    versions:
+    - 3.8.2
+  - dependency-name: elliptic
+    versions:
+    - 6.5.3
